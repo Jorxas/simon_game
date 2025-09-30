@@ -1,0 +1,54 @@
+# Entity-Relationship-Modell (ERM)
+
+## Tabellen
+
+### 1. `players`
+- **id** (PK) : INT AUTO_INCREMENT
+- username : VARCHAR(255) EINDEUTIG, NICHT NULL
+- password : VARCHAR(255) NICHT NULL
+- profileUrl : VARCHAR(500) NULL
+
+### 2. `lobbies`
+- **id** (PK) : INT AUTO_INCREMENT
+- status : ENUM('waiting', 'playing', 'finished', 'cancelled') STANDARD 'waiting'
+- current_players : INT STANDARD 0
+- round_duration : INT STANDARD 30
+- speed_multiplier : DECIMAL(2,1) STANDARD 1.0
+- sequence_min_length : INT STANDARD 5
+- created_at : TIMESTAMP STANDARD CURRENT_TIMESTAMP
+- updated_at : TIMESTAMP STANDARD CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+- started_at : TIMESTAMP NULL
+- finished_at : TIMESTAMP NULL
+
+### 3. `controllers`
+- **id** (PK) : INT AUTO_INCREMENT
+- status : ENUM('online', 'busy') STANDARD 'online'
+
+### 4. `lobbies_players` (Verknüpfungstabelle)
+- **id** (PK) : INT AUTO_INCREMENT
+- lobby_id : INT (FK → `lobbies.id`, ON DELETE CASCADE)
+- player_id : INT (FK → `players.id`, ON DELETE CASCADE)
+- controller_id : INT (FK → `controllers.id`, ON DELETE SET NULL)
+- role : ENUM('player', 'spectator') STANDARD 'player'
+- status : ENUM('waiting', 'ready', 'playing') STANDARD 'waiting'
+- score : INT STANDARD 0
+- round : INT STANDARD 0
+- joined_at : TIMESTAMP STANDARD CURRENT_TIMESTAMP
+- **Eindeutige Einschränkung** auf (lobby_id, player_id)
+
+---
+
+## Beziehungen
+
+- **players** (1) ↔ (N) **lobbies_players**
+- **lobbies** (1) ↔ (N) **lobbies_players**
+- **controllers** (1) ↔ (N) **lobbies_players**
+
+### ASCII-Diagramm
+
+```plaintext
+[players] 1 --------< [lobbies_players] >-------- 1 [lobbies]
+    |                                   |
+    |                                   |
+    v                                   v
+[controllers] --------------------------

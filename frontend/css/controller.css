@@ -1,0 +1,288 @@
+:root {
+    --primary-violet: #8b5cf6;
+    --primary-blue: #3b82f6;
+    --bg-dark: hsl(220, 25%, 8%);
+    --card-dark: hsl(220, 25%, 10%);
+    --text-light: hsl(220, 20%, 92%);
+    --border-dark: hsl(220, 25%, 18%);
+    --simon-red: hsl(0, 85%, 55%);
+    --simon-yellow: hsl(48, 95%, 55%);
+    --simon-green: hsl(120, 65%, 45%);
+    --simon-blue: hsl(220, 85%, 55%);
+}
+
+body {
+    background: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Bubble Background */
+.bubble-container {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background: radial-gradient(1200px 600px at 20% 120%, hsl(265, 85%, 60%, 0.08), transparent 60%),
+                radial-gradient(1000px 600px at 80% 120%, hsl(220, 85%, 60%, 0.06), transparent 60%);
+}
+
+@keyframes bubbleFloat {
+    0% {
+        transform: translateY(10vh) scale(0.9);
+        opacity: 0.25;
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.bubble {
+    position: absolute;
+    bottom: -15vh;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, hsl(265, 85%, 60%, 0.55), hsl(220, 85%, 60%, 0.25), transparent 70%);
+    filter: blur(1px);
+    opacity: 0.5;
+    animation: bubbleFloat linear infinite;
+}
+
+.game-card {
+    background: var(--card-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 20px -2px hsl(265, 85%, 60%, 0.1);
+    transition: all 0.3s ease;
+}
+
+.game-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px -8px hsl(265, 85%, 60%, 0.3);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-violet), var(--primary-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn-game {
+    background: linear-gradient(135deg, var(--primary-violet), var(--primary-blue));
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-game:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px hsl(265, 85%, 60%, 0.4);
+    color: white;
+}
+
+.btn-simon {
+    background: linear-gradient(45deg, var(--simon-blue), var(--simon-green));
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-simon:hover {
+    transform: scale(1.05);
+    color: white;
+}
+
+/* Simon Buttons */
+.simon-button {
+    border: 4px solid;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 8px 30px -8px hsl(265, 85%, 60%, 0.3);
+    /* Taille par défaut pour desktop */
+    width: 128px;
+    height: 128px;
+}
+
+/* Media queries pour responsive design */
+@media (max-width: 767px) {
+    .simon-button {
+        width: 112px;
+        height: 112px;
+    }
+}
+
+@media (max-width: 575px) {
+    .simon-button {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Animation pour les boutons qui brillent */
+.simon-button.lighting-up {
+    animation: buttonLight 0.6s ease-in-out;
+}
+
+@keyframes buttonLight {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 8px 30px -8px hsl(265, 85%, 60%, 0.3);
+    }
+    50% {
+        opacity: 0.2;
+        transform: scale(1.3);
+        box-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 0 0 60px currentColor;
+        filter: brightness(1.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 8px 30px -8px hsl(265, 85%, 60%, 0.3);
+    }
+}
+
+.simon-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px hsl(265, 85%, 60%, 0.4);
+}
+
+.simon-button.active {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px currentColor;
+}
+
+.simon-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.simon-red {
+    background: var(--simon-red);
+    border-color: var(--simon-red);
+    color: var(--simon-red);
+}
+
+.simon-yellow {
+    background: var(--simon-yellow);
+    border-color: var(--simon-yellow);
+    color: var(--simon-yellow);
+}
+
+.simon-green {
+    background: var(--simon-green);
+    border-color: var(--simon-green);
+    color: var(--simon-green);
+}
+
+.simon-blue {
+    background: var(--simon-blue);
+    border-color: var(--simon-blue);
+    color: var(--simon-blue);
+}
+
+.connection-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    animation: pulse 2s infinite;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+.connection-indicator.disconnected::before {
+    background: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.navbar-dark {
+    background: var(--card-dark) !important;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.offcanvas-dark {
+    background: var(--card-dark);
+    border-left: 1px solid var(--border-dark);
+}
+
+/* Écran d'élimination */
+.elimination-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.elimination-card {
+    background: var(--card-dark);
+    border: 1px solid var(--border-dark);
+    border-radius: 1rem;
+    box-shadow: 0 8px 30px -8px hsl(265, 85%, 60%, 0.3);
+    max-width: 500px;
+    width: 100%;
+}
+
+.elimination-icon {
+    font-size: 4rem;
+    color: #ef4444;
+    animation: pulse 2s infinite;
+}
+
+.elimination-title {
+    color: #ef4444;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.final-score {
+    background: linear-gradient(135deg, var(--primary-violet), var(--primary-blue));
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.final-score h3 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.score-display {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.elimination-message {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.elimination-message p {
+    margin-bottom: 0.5rem;
+}
+
+.elimination-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.elimination-actions .btn {
+    min-width: 150px;
+}

@@ -1,0 +1,228 @@
+/* Profile Picture Styles - WhatsApp-like */
+.profile-picture-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-picture-container:hover {
+    transform: scale(1.05);
+}
+
+.profile-picture-container:hover::after {
+    content: 'Change Photo';
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.profile-picture-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #28a745;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.profile-picture-small:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+.profile-picture-small.eliminated {
+    border-color: #dc3545;
+    opacity: 0.6;
+    filter: grayscale(50%);
+}
+
+/* Profile Picture Selection Modal */
+.profile-picture-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.profile-picture-option {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.profile-picture-option:hover {
+    border-color: #007bff;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+}
+
+.profile-picture-option.selected {
+    border-color: #28a745;
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
+    transform: scale(1.1);
+}
+
+/* Profile Picture Modal */
+.profile-picture-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.profile-picture-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.profile-picture-modal-content {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    max-width: 400px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.7);
+    transition: transform 0.3s ease;
+}
+
+.profile-picture-modal.show .profile-picture-modal-content {
+    transform: scale(1);
+}
+
+.profile-picture-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.profile-picture-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.profile-picture-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.profile-picture-modal-close:hover {
+    background: #f8f9fa;
+    color: #333;
+}
+
+/* Dark theme support */
+.dark-theme .profile-picture-modal-content {
+    background: #2d3748;
+    color: white;
+}
+
+.dark-theme .profile-picture-modal-title {
+    color: white;
+}
+
+.dark-theme .profile-picture-modal-close {
+    color: #a0aec0;
+}
+
+.dark-theme .profile-picture-modal-close:hover {
+    background: #4a5568;
+    color: white;
+}
+
+.dark-theme .profile-picture-option {
+    background: #4a5568;
+}
+
+/* Animation for profile picture changes */
+@keyframes profilePictureChange {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.2) rotate(180deg);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+.profile-picture-changing {
+    animation: profilePictureChange 0.6s ease-in-out;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .profile-picture-small {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .profile-picture-option {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .profile-picture-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-picture-small {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .profile-picture-option {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .profile-picture-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

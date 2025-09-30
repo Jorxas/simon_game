@@ -1,0 +1,543 @@
+:root {
+    /* Simon Game Colors */
+    --simon-red: #ff4444;
+    --simon-green: #44ff44;
+    --simon-blue: #4444ff;
+    --simon-yellow: #ffff44;
+    
+    /* Theme Colors */
+    --primary-violet: #7c3aed;
+    --primary-blue: #2563eb;
+    --primary-cyan: #0891b2;
+    --primary-emerald: #059669;
+    --bg-light: hsl(210, 20%, 98%);
+    --card-light: hsl(0, 0%, 100%);
+    --text-dark: #000000;
+    --border-light: hsl(220, 15%, 85%);
+    --accent-gold: #d97706;
+    --accent-pink: #be185d;
+    
+    /* Dark theme variables */
+    --bg-dark: hsl(240, 10%, 8%);
+    --card-dark: hsl(240, 10%, 10%);
+    --text-light: hsl(240, 5%, 96%);
+    --border-dark: hsl(240, 10%, 18%);
+}
+
+/* Light theme (default) */
+body {
+    background: var(--bg-light);
+    color: var(--text-dark);
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Dark theme */
+body.dark-theme {
+    background: var(--bg-dark);
+    color: var(--text-light);
+}
+
+body.dark-theme .game-card {
+    background: var(--card-dark);
+    border: 1px solid var(--border-dark);
+}
+
+body.dark-theme .navbar-dark {
+    background: var(--card-dark) !important;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+body.dark-theme .table-dark {
+    --bs-table-bg: var(--card-dark);
+    --bs-table-border-color: var(--border-dark);
+}
+
+body.dark-theme .modal-content.game-card {
+    background: var(--card-dark);
+    border: 1px solid var(--border-dark);
+}
+
+body.dark-theme .modal-header,
+body.dark-theme .modal-footer,
+body.dark-theme .modal-body {
+    background: var(--card-dark);
+    border-color: var(--border-dark);
+}
+
+body.dark-theme .modal-title {
+    color: var(--text-light);
+}
+
+body.dark-theme .form-control,
+body.dark-theme .form-select {
+    background: var(--bg-dark);
+    border: 1px solid var(--border-dark);
+    color: var(--text-light);
+}
+
+body.dark-theme .form-control:focus,
+body.dark-theme .form-select:focus {
+    background: var(--bg-dark);
+    border-color: var(--simon-blue);
+    color: var(--text-light);
+}
+
+body.dark-theme .form-label {
+    color: var(--text-light);
+}
+
+/* Dark theme bubble background */
+body.dark-theme .bubble-container {
+    background: radial-gradient(1200px 600px at 20% 120%, rgba(255, 68, 68, 0.15), transparent 60%),
+                radial-gradient(1000px 600px at 80% 120%, rgba(68, 68, 255, 0.12), transparent 60%),
+                radial-gradient(800px 600px at 50% 80%, rgba(68, 255, 68, 0.1), transparent 60%),
+                radial-gradient(600px 600px at 50% 20%, rgba(255, 255, 68, 0.08), transparent 60%);
+}
+
+/* Dark theme bubbles */
+body.dark-theme .bubble {
+    opacity: 0.6;
+}
+
+body.dark-theme .bubble:nth-child(4n+1) {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 68, 68, 0.8), transparent 70%);
+}
+
+body.dark-theme .bubble:nth-child(4n+2) {
+    background: radial-gradient(circle at 30% 30%, rgba(68, 255, 68, 0.8), transparent 70%);
+}
+
+body.dark-theme .bubble:nth-child(4n+3) {
+    background: radial-gradient(circle at 30% 30%, rgba(68, 68, 255, 0.8), transparent 70%);
+}
+
+body.dark-theme .bubble:nth-child(4n+4) {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 68, 0.8), transparent 70%);
+}
+
+/* Bubble Background */
+.bubble-container {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background: radial-gradient(1200px 600px at 20% 120%, var(--simon-red), transparent 60%),
+                radial-gradient(1000px 600px at 80% 120%, var(--simon-blue), transparent 60%),
+                radial-gradient(800px 600px at 50% 80%, var(--simon-green), transparent 60%),
+                radial-gradient(600px 600px at 50% 20%, var(--simon-yellow), transparent 60%);
+}
+
+@keyframes bubbleFloat {
+    0% {
+        transform: translateY(10vh) scale(0.9);
+        opacity: 0.25;
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.bubble {
+    position: absolute;
+    bottom: -15vh;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--simon-red), var(--simon-blue), transparent 70%);
+    filter: blur(1px);
+    opacity: 0.3;
+    animation: bubbleFloat linear infinite;
+}
+
+/* Different colored bubbles */
+.bubble:nth-child(4n+1) {
+    background: radial-gradient(circle at 30% 30%, var(--simon-red), transparent 70%);
+}
+
+.bubble:nth-child(4n+2) {
+    background: radial-gradient(circle at 30% 30%, var(--simon-green), transparent 70%);
+}
+
+.bubble:nth-child(4n+3) {
+    background: radial-gradient(circle at 30% 30%, var(--simon-blue), transparent 70%);
+}
+
+.bubble:nth-child(4n+4) {
+    background: radial-gradient(circle at 30% 30%, var(--simon-yellow), transparent 70%);
+}
+
+.game-card {
+    background: var(--card-light);
+    border: 1px solid var(--border-light);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 20px -2px hsl(265, 85%, 60%, 0.1);
+    transition: all 0.3s ease;
+}
+
+.game-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px -8px hsl(265, 85%, 60%, 0.2);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary-violet), var(--primary-cyan), var(--primary-emerald));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn-game {
+    background: linear-gradient(135deg, var(--simon-green), #059669);
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-game:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px var(--simon-blue);
+    color: white;
+}
+
+/* Bouton End Game - complètement rouge */
+.btn-game.end-game {
+    background: #dc3545 !important;
+    border: none !important;
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+.btn-game.end-game:hover {
+    background: #c82333 !important;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px #dc3545;
+    color: white !important;
+}
+
+.status-ready { color: var(--simon-green); background: rgba(68, 255, 68, 0.1); }
+.status-waiting { color: var(--simon-yellow); background: rgba(255, 255, 68, 0.1); }
+.status-playing { color: var(--simon-blue); background: rgba(68, 68, 255, 0.1); }
+.status-finished { color: var(--accent-gold); background: rgba(217, 119, 6, 0.1); }
+.status-error { color: var(--simon-red); background: rgba(255, 68, 68, 0.1); }
+
+.connection-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--simon-green);
+    box-shadow: 0 0 10px var(--simon-green);
+    animation: pulse 2s infinite;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Settings gear icon animation */
+.btn-outline-light .fas.fa-cog {
+    transition: transform 0.3s ease;
+    color: #ffffff !important;
+}
+
+.btn-outline-light:hover .fas.fa-cog {
+    transform: rotate(90deg);
+}
+
+.btn-outline-light:active .fas.fa-cog {
+    transform: rotate(180deg);
+}
+
+.btn-outline-dark .fas.fa-cog {
+    transition: transform 0.3s ease;
+    color: #000000 !important;
+}
+
+.btn-outline-dark:hover .fas.fa-cog {
+    transform: rotate(90deg);
+}
+
+.btn-outline-dark:active .fas.fa-cog {
+    transform: rotate(180deg);
+}
+
+/* Theme toggle button */
+.btn-outline-light .fas.fa-moon,
+.btn-outline-light .fas.fa-sun {
+    transition: transform 0.3s ease;
+}
+
+.btn-outline-light:hover .fas.fa-moon,
+.btn-outline-light:hover .fas.fa-sun {
+    transform: scale(1.1);
+}
+
+
+
+.table-dark {
+    --bs-table-bg: var(--card-light);
+    --bs-table-border-color: var(--border-light);
+    --bs-table-color: #000000;
+}
+
+/* Table text colors for light theme */
+.table-dark th,
+.table-dark td {
+    color: #000000 !important;
+}
+
+/* Dark theme table overrides */
+body.dark-theme .table-dark {
+    --bs-table-bg: var(--card-dark);
+    --bs-table-border-color: var(--border-dark);
+    --bs-table-color: var(--text-light);
+}
+
+body.dark-theme .table-dark th,
+body.dark-theme .table-dark td {
+    color: var(--text-light) !important;
+}
+
+.navbar-dark {
+    background: var(--card-light) !important;
+    border-bottom: 1px solid var(--border-light);
+}
+
+/* Light theme specific styles */
+.navbar-dark .navbar-brand,
+.navbar-dark .text-light,
+.navbar-dark .btn-outline-light {
+    color: #000000 !important;
+}
+
+.navbar-dark .btn-outline-light {
+    border-color: #000000;
+}
+
+.navbar-dark .btn-outline-light:hover {
+    background-color: var(--simon-blue);
+    color: #ffffff !important;
+}
+
+/* Dark theme button styles */
+.navbar-dark .btn-outline-dark {
+    color: #ffffff !important;
+    border-color: #ffffff;
+}
+
+/* Button icon colors for light theme */
+.navbar-dark .btn-outline-dark .fas {
+    color: #000000 !important;
+}
+
+.navbar-dark .btn-outline-light .fas {
+    color: #ffffff !important;
+}
+
+/* Specific engrenage color for light theme */
+.navbar-dark .btn-outline-dark .fas.fa-cog {
+    color: #000000 !important;
+}
+
+/* Button icon colors for dark theme */
+body.dark-theme .navbar-dark .btn-outline-dark .fas {
+    color: #ffffff !important;
+}
+
+body.dark-theme .navbar-dark .btn-outline-light .fas {
+    color: #ffffff !important;
+}
+
+/* Specific icon colors for dark theme */
+body.dark-theme .btn-outline-light .fas.fa-cog {
+    color: #ffffff !important;
+}
+
+body.dark-theme .btn-outline-dark .fas.fa-cog {
+    color: #ffffff !important;
+}
+
+/* Modal close button colors */
+.btn-close {
+    filter: invert(0);
+}
+
+body.dark-theme .btn-close {
+    filter: invert(1);
+}
+
+.navbar-dark .btn-outline-dark:hover {
+    background-color: var(--simon-blue);
+    color: #ffffff !important;
+}
+
+/* Modal Styles */
+.modal-content.game-card {
+    background: var(--card-light);
+    border: 1px solid var(--border-light);
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 40px -8px hsl(265, 85%, 60%, 0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-light);
+    background: var(--card-light);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-light);
+    background: var(--card-light);
+}
+
+.modal-body {
+    background: var(--card-light);
+}
+
+.modal-title {
+    color: var(--text-dark);
+}
+
+.form-control, .form-select {
+    background: var(--card-light);
+    border: 1px solid var(--border-light);
+    color: var(--text-dark);
+}
+
+.form-control:focus, .form-select:focus {
+    background: var(--card-light);
+    border-color: var(--simon-blue);
+    color: var(--text-dark);
+    box-shadow: 0 0 0 0.2rem rgba(68, 68, 255, 0.25);
+}
+
+.form-label {
+    color: var(--text-dark);
+}
+
+/* Light theme text colors */
+.card-title,
+.card-text,
+.text-muted,
+.form-label,
+.modal-title,
+.navbar-brand,
+h1, h2, h3, h4, h5, h6 {
+    color: #000000 !important;
+}
+
+/* Dark theme overrides */
+body.dark-theme .card-title,
+body.dark-theme .card-text,
+body.dark-theme .text-muted,
+body.dark-theme .form-label,
+body.dark-theme .modal-title,
+body.dark-theme .navbar-brand,
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6 {
+    color: var(--text-light) !important;
+}
+
+body.dark-theme .navbar-dark .navbar-brand,
+body.dark-theme .navbar-dark .text-light,
+body.dark-theme .navbar-dark .btn-outline-light {
+    color: var(--text-light) !important;
+}
+
+body.dark-theme .navbar-dark .btn-outline-light {
+    border-color: var(--text-light);
+}
+
+body.dark-theme .navbar-dark .btn-outline-light:hover {
+    background-color: var(--text-light);
+    color: var(--bg-dark) !important;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Footer styles */
+.footer-custom {
+    background: var(--card-light);
+    border-color: var(--border-light) !important;
+}
+
+.footer-custom .text-muted {
+    color: #000000 !important;
+}
+
+.footer-custom a {
+    color: #000000 !important;
+}
+
+.footer-custom a:hover {
+    color: var(--simon-blue) !important;
+}
+
+/* Dark theme footer overrides */
+body.dark-theme .footer-custom {
+    background: var(--card-dark);
+    border-color: var(--border-dark) !important;
+}
+
+body.dark-theme .footer-custom .text-muted {
+    color: var(--text-light) !important;
+}
+
+body.dark-theme .footer-custom a {
+    color: var(--text-light) !important;
+}
+
+body.dark-theme .footer-custom a:hover {
+    color: var(--simon-blue) !important;
+}
+
+/* Profile Picture Selection Styles */
+.profile-picture {
+    transition: all 0.3s ease;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    padding: 2px;
+    background: white;
+}
+
+.profile-picture:hover {
+    transform: scale(1.05);
+    border-color: var(--simon-blue);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture.selected {
+    border: 3px solid var(--simon-blue);
+    box-shadow: 0 4px 12px rgba(68, 68, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Dark theme profile picture styles */
+body.dark-theme .profile-picture {
+    background: var(--card-dark);
+    border-color: var(--border-dark);
+}
+
+body.dark-theme .profile-picture:hover {
+    border-color: var(--simon-blue);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .profile-picture.selected {
+    border-color: var(--simon-blue);
+    box-shadow: 0 4px 12px rgba(68, 68, 255, 0.4);
+}
+
+#profilePictureGrid {
+    max-height: 200px;
+    overflow-y: auto;
+}
